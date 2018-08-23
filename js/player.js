@@ -12,7 +12,8 @@ class Player {
     this.health = 100;
     this.pos = [500, 450];
     this.angle = 0;
-    this.sprite = "stand right";
+    this.sprite = "stand";
+    this.face = "right";
     this.currentSprite = 0;
     this.buffer = 0;
   }
@@ -30,7 +31,6 @@ class Player {
 
   draw(ctx) {
     const contra3 = document.getElementById("contra3");
-    console.log(this.angle);
     switch(this.sprite) {
       case "run":
         if (this.face === "right") {
