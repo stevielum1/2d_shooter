@@ -64,6 +64,8 @@ class GameView {
           default:
           break;
         }
+      } else {
+        this.keydown = "";
       }
     });
   }

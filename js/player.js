@@ -9,8 +9,8 @@ const RUNNING_UPLEFT = [[497,171,28,48],[465,171,23,48],[435,171,29,48],[404,173
 const RUNNING_DOWNLEFT = [[495,226,29,42],[462,226,27,42],[428,226,28,43],[393,227,26,42]];
 const JUMPING_RIGHT = [[2,50,24,20],[30,49,20,24],[59,49,24,20],[93,48,20,24]];
 const JUMPING_LEFT = [[509,50,24,20],[485,49,20,24],[452,49,24,20],[422,48,20,24]];
-const DEAD_RIGHT = [[110,278,30,41],[16,295,32,27],[55,305,48,13]];
-const DEAD_LEFT = [[395,278,30,41],[487,295,32,27],[432,305,48,13]];
+const DEAD_RIGHT = [[110,278,30,41],[16,291,32,27],[55,290,48,32]];
+const DEAD_LEFT = [[395,278,30,41],[487,291,32,27],[432,290,48,32]];
 
 const BUFFER = 10;
 
@@ -65,14 +65,14 @@ class Player {
           object.pos[0] + object.width > this.pos[0] &&
           object.pos[1] < this.pos[1] + this.height &&
           object.pos[1] + object.width > this.pos[1]) {
-            this.health -= 50;
+            this.health -= 100;
           }
     } else if (object instanceof EnemyBullet) {
       if (object.pos[0] < this.pos[0] + this.width &&
           object.pos[0] + object.radius > this.pos[0] &&
           object.pos[1] < this.pos[1] + this.height &&
           object.pos[1] + object.radius > this.pos[1]) {
-            this.health -= 1;
+            this.health -= 10;
             object.pos = [-10, -10];
             object.vel = [0, 0];
           }

@@ -36,10 +36,10 @@ class GroundEnemy {
 
   move() {
     this.pos[0] += this.vel[0];
-    if (this.pos[0] >= 1005) {
+    if (this.pos[0] > 1005) {
       this.pos[0] = -5;
     }
-    if (this.pos[0] <= -5) {
+    if (this.pos[0] < -5) {
       this.pos[0] = 1005;
     }
   }
