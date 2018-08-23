@@ -1,15 +1,14 @@
 class EnemyBullet {
-  constructor(enemy) {
-    this.enemy = enemy;
+  constructor() {
     this.pos = [-10, -10];
     this.vel = [0, 0];
     this.radius = 3;
   }
 
-  shoot() {
-    this.pos[0] = this.enemy.pos[0] + 15;
-    this.pos[1] = this.enemy.pos[1] + 15;
-    this.vel[0] = this.enemy.vel[0] * 2;
+  shoot(enemy) {
+    this.pos[0] = enemy.pos[0] + 15;
+    this.pos[1] = enemy.pos[1] + 15;
+    this.vel[0] = enemy.vel[0] * 2;
   }
 
   move() {

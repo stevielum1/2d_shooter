@@ -10,6 +10,7 @@ class Game {
     this.player = new Player();
     this.initBullets();
     this.currentBullet = 0;
+    this.currentEnemyBullet = 0;
     this.scrollX = 0;
     this.initEnemies();
     this.buffer = 0;
@@ -21,19 +22,23 @@ class Game {
       const bullet = new PlayerBullet(this.player);
       this.playerBullets.push(bullet);
     }
+
+    this.enemyBullets = [];
+    for(let i = 0; i < 50; i++) {
+      const bullet = new EnemyBullet();
+      this.enemyBullets.push(bullet);
+    }
   }
 
   initEnemies() {
     this.enemies = [];
-    this.enemyBullets = [];
 
-    const enemy = new GroundEnemy();
+    const enemy = new GroundEnemy({
+      from: "left",
+      speed: 3
+    });
+
     this.enemies.push(enemy);
-
-    for(let i = 0; i < 5; i++) {
-      const enemyBullet = new EnemyBullet(enemy);
-      this.enemyBullets.push(enemyBullet);
-    }
   }
 
   draw(ctx) {
@@ -92,21 +97,28 @@ class Game {
   }
 
   randomEnemyShoot() {
+    if (this.buffer === 7) {
+      const idx = Math.floor(Math.random() * this.enemies.length);
+      const enemy = this.enemies[idx];
+      this.enemyBullets[this.currentEnemyBullet].shoot(enemy);
+      this.currentEnemyBullet = (this.currentEnemyBullet + 1) % 50;
+    }
+  }
+
+  spawnEnemy() {
     if (this.buffer === 0) {
-      const idx = Math.floor(Math.random() * this.enemyBullets.length);
-      if (idx !== 0) {
-        this.enemyBullets[idx].shoot();
-      }
+      const from = Math.random() < 0.5 ? "left" : "right";
+      const speed = Math.floor(Math.random() * 4) + 1;
+      const enemy = new GroundEnemy({
+        from,
+        speed
+      });
+      this.enemies.push(enemy);
     }
   }
 
   removeEnemy(enemy) {
     const idx = this.enemies.indexOf(enemy);
-
-    this.enemyBullets = this.enemyBullets.filter(bullet => (
-      bullet.enemy !== this.enemies[idx]
-    ));
-
     this.enemies = this.enemies.slice(0, idx).concat(this.enemies.slice(idx+1));
   }
 

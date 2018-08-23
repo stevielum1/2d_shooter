@@ -18,6 +18,7 @@ class GameView {
     this.game.move();
     this.game.checkCollisions();
     this.game.randomEnemyShoot();
+    this.game.spawnEnemy();
     requestAnimationFrame(this.step.bind(this));
   }
 

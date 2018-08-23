@@ -9,8 +9,8 @@ const BUFFER = 10;
 class GroundEnemy {
   constructor(options) {
     this.health = 2;
-    this.pos = [300, 450];
-    this.vel = [3, 0];
+    this.pos = options.from === "left" ? [-5, 450] : [1005, 450];
+    this.vel = options.from === "left" ? [options.speed, 0] : [-options.speed, 0];
     this.width = 32;
     this.height = 40;
     this.currentSprite = 0;
