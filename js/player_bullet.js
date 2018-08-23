@@ -1,8 +1,9 @@
-class Bullet {
+class PlayerBullet {
   constructor(player) {
     this.player = player;
     this.pos = [-10, -10];
     this.vel = [0, 0];
+    this.radius = 3;
   }
 
   shoot() {
@@ -29,10 +30,11 @@ class Bullet {
 
   draw(ctx) {
     ctx.beginPath();
-    ctx.arc(this.pos[0], this.pos[1], 3, 0, Math.PI * 2);
+    ctx.arc(this.pos[0], this.pos[1], this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
     ctx.fill();
     ctx.closePath();
   }
 }
 
-module.exports = Bullet;
+module.exports = PlayerBullet;
