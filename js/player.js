@@ -18,65 +18,56 @@ class Player {
   }
 
   updateAngle(e) {
-    const xDist = e.pageX - this.pos[0];
-    const yDist = e.pageY - this.pos[1];
+    const xDist = e.pageX - (this.pos[0] + 15);
+    const yDist = e.pageY - (this.pos[1] + 15);
     this.angle = Math.atan2(yDist, xDist);
+    if (-1.5 < this.angle && this.angle < 1.5) {
+      this.face = "right";
+    } else {
+      this.face = "left";
+    }
   }
-
-  // draw(ctx) {
-  //   ctx.save();
-  //
-  //   ctx.translate(this.pos[0]-7.5, this.pos[1]);
-  //   ctx.rotate(this.angle);
-  //
-  //   ctx.beginPath();
-  //   ctx.rect(0, -5, 30, 10);
-  //   ctx.fill();
-  //   ctx.closePath();
-  //
-  //   ctx.translate(-this.pos[0]+7.5, -this.pos[1]);
-  //   ctx.rotate(-this.angle);
-  //
-  //   ctx.restore();
-  // }
 
   draw(ctx) {
     const contra3 = document.getElementById("contra3");
+    console.log(this.angle);
     switch(this.sprite) {
-      case "run right":
-        if (-1.5 < this.angle && this.angle < -0.25) {
-          ctx.drawImage(contra3, RUNNING_UPRIGHT[this.currentSprite][0], RUNNING_UPRIGHT[this.currentSprite][1], RUNNING_UPRIGHT[this.currentSprite][2], RUNNING_UPRIGHT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_UPRIGHT[this.currentSprite][2], RUNNING_UPRIGHT[this.currentSprite][3]);
-        } else if (0.5 < this.angle && this.angle < 1) {
-          ctx.drawImage(contra3, RUNNING_DOWNRIGHT[this.currentSprite][0], RUNNING_DOWNRIGHT[this.currentSprite][1], RUNNING_DOWNRIGHT[this.currentSprite][2], RUNNING_DOWNRIGHT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_DOWNRIGHT[this.currentSprite][2], RUNNING_DOWNRIGHT[this.currentSprite][3]);
+      case "run":
+        if (this.face === "right") {
+          if (-1.55 < this.angle && this.angle < -0.25) {
+            ctx.drawImage(contra3, RUNNING_UPRIGHT[this.currentSprite][0], RUNNING_UPRIGHT[this.currentSprite][1], RUNNING_UPRIGHT[this.currentSprite][2], RUNNING_UPRIGHT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_UPRIGHT[this.currentSprite][2], RUNNING_UPRIGHT[this.currentSprite][3]);
+          } else if (0.35 < this.angle && this.angle < 1.5) {
+            ctx.drawImage(contra3, RUNNING_DOWNRIGHT[this.currentSprite][0], RUNNING_DOWNRIGHT[this.currentSprite][1], RUNNING_DOWNRIGHT[this.currentSprite][2], RUNNING_DOWNRIGHT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_DOWNRIGHT[this.currentSprite][2], RUNNING_DOWNRIGHT[this.currentSprite][3]);
+          } else {
+            ctx.drawImage(contra3, RUNNING_RIGHT[this.currentSprite][0], RUNNING_RIGHT[this.currentSprite][1], RUNNING_RIGHT[this.currentSprite][2], RUNNING_RIGHT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_RIGHT[this.currentSprite][2], RUNNING_RIGHT[this.currentSprite][3]);
+          }
         } else {
-          ctx.drawImage(contra3, RUNNING_RIGHT[this.currentSprite][0], RUNNING_RIGHT[this.currentSprite][1], RUNNING_RIGHT[this.currentSprite][2], RUNNING_RIGHT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_RIGHT[this.currentSprite][2], RUNNING_RIGHT[this.currentSprite][3]);
+          if (-2.9 < this.angle && this.angle < -1.5) {
+            ctx.drawImage(contra3, RUNNING_UPLEFT[this.currentSprite][0], RUNNING_UPLEFT[this.currentSprite][1], RUNNING_UPLEFT[this.currentSprite][2], RUNNING_UPLEFT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_UPLEFT[this.currentSprite][2], RUNNING_UPLEFT[this.currentSprite][3]);
+          } else if (1.5 < this.angle && this.angle < 2.75) {
+            ctx.drawImage(contra3, RUNNING_DOWNLEFT[this.currentSprite][0], RUNNING_DOWNLEFT[this.currentSprite][1], RUNNING_DOWNLEFT[this.currentSprite][2], RUNNING_DOWNLEFT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_DOWNLEFT[this.currentSprite][2], RUNNING_DOWNLEFT[this.currentSprite][3]);
+          } else {
+            ctx.drawImage(contra3, RUNNING_LEFT[this.currentSprite][0], RUNNING_LEFT[this.currentSprite][1], RUNNING_LEFT[this.currentSprite][2], RUNNING_LEFT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_LEFT[this.currentSprite][2], RUNNING_LEFT[this.currentSprite][3]);
+          }
         }
         break;
-      case "run left":
-        if (-3 < this.angle && this.angle < -1.5) {
-          ctx.drawImage(contra3, RUNNING_UPLEFT[this.currentSprite][0], RUNNING_UPLEFT[this.currentSprite][1], RUNNING_UPLEFT[this.currentSprite][2], RUNNING_UPLEFT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_UPLEFT[this.currentSprite][2], RUNNING_UPLEFT[this.currentSprite][3]);
-        } else if (1.2 < this.angle && this.angle < 2) {
-          ctx.drawImage(contra3, RUNNING_DOWNLEFT[this.currentSprite][0], RUNNING_DOWNLEFT[this.currentSprite][1], RUNNING_DOWNLEFT[this.currentSprite][2], RUNNING_DOWNLEFT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_DOWNLEFT[this.currentSprite][2], RUNNING_DOWNLEFT[this.currentSprite][3]);
+      case "stand":
+        if (this.face === "right") {
+          if (-1.5 < this.angle && this.angle < -0.25) {
+            ctx.drawImage(contra3, RUNNING_UPRIGHT[1][0], RUNNING_UPRIGHT[1][1], RUNNING_UPRIGHT[1][2], RUNNING_UPRIGHT[1][3], this.pos[0], this.pos[1], RUNNING_UPRIGHT[1][2], RUNNING_UPRIGHT[1][3]);
+          } else if (0.5 < this.angle && this.angle < 1) {
+            ctx.drawImage(contra3, RUNNING_DOWNRIGHT[1][0], RUNNING_DOWNRIGHT[1][1], RUNNING_DOWNRIGHT[1][2], RUNNING_DOWNRIGHT[1][3], this.pos[0], this.pos[1], RUNNING_DOWNRIGHT[1][2], RUNNING_DOWNRIGHT[1][3]);
+          } else {
+            ctx.drawImage(contra3, RUNNING_RIGHT[1][0], RUNNING_RIGHT[1][1], RUNNING_RIGHT[1][2], RUNNING_RIGHT[1][3], this.pos[0], this.pos[1], RUNNING_RIGHT[1][2], RUNNING_RIGHT[1][3]);
+          }
         } else {
-          ctx.drawImage(contra3, RUNNING_LEFT[this.currentSprite][0], RUNNING_LEFT[this.currentSprite][1], RUNNING_LEFT[this.currentSprite][2], RUNNING_LEFT[this.currentSprite][3], this.pos[0], this.pos[1], RUNNING_LEFT[this.currentSprite][2], RUNNING_LEFT[this.currentSprite][3]);
-        }
-        break;
-      case "stand right":
-        if (-1.5 < this.angle && this.angle < -0.25) {
-          ctx.drawImage(contra3, RUNNING_UPRIGHT[1][0], RUNNING_UPRIGHT[1][1], RUNNING_UPRIGHT[1][2], RUNNING_UPRIGHT[1][3], this.pos[0], this.pos[1], RUNNING_UPRIGHT[1][2], RUNNING_UPRIGHT[1][3]);
-        } else if (0.5 < this.angle && this.angle < 1) {
-          ctx.drawImage(contra3, RUNNING_DOWNRIGHT[1][0], RUNNING_DOWNRIGHT[1][1], RUNNING_DOWNRIGHT[1][2], RUNNING_DOWNRIGHT[1][3], this.pos[0], this.pos[1], RUNNING_DOWNRIGHT[1][2], RUNNING_DOWNRIGHT[1][3]);
-        } else {
-          ctx.drawImage(contra3, RUNNING_RIGHT[1][0], RUNNING_RIGHT[1][1], RUNNING_RIGHT[1][2], RUNNING_RIGHT[1][3], this.pos[0], this.pos[1], RUNNING_RIGHT[1][2], RUNNING_RIGHT[1][3]);
-        }
-        break;
-      case "stand left":
-        if (-3 < this.angle && this.angle < -1.55) {
-          ctx.drawImage(contra3, RUNNING_UPLEFT[1][0], RUNNING_UPLEFT[1][1], RUNNING_UPLEFT[1][2], RUNNING_UPLEFT[1][3], this.pos[0], this.pos[1], RUNNING_UPLEFT[1][2], RUNNING_UPLEFT[1][3]);
-        } else if (1.2 < this.angle && this.angle < 2) {
-          ctx.drawImage(contra3, RUNNING_DOWNLEFT[1][0], RUNNING_DOWNLEFT[1][1], RUNNING_DOWNLEFT[1][2], RUNNING_DOWNLEFT[1][3], this.pos[0], this.pos[1], RUNNING_DOWNLEFT[1][2], RUNNING_DOWNLEFT[1][3]);
-        } else {
-          ctx.drawImage(contra3, RUNNING_LEFT[1][0], RUNNING_LEFT[1][1], RUNNING_LEFT[1][2], RUNNING_LEFT[1][3], this.pos[0], this.pos[1], RUNNING_LEFT[1][2], RUNNING_LEFT[1][3]);
+          if (-3 < this.angle && this.angle < -1.55) {
+            ctx.drawImage(contra3, RUNNING_UPLEFT[1][0], RUNNING_UPLEFT[1][1], RUNNING_UPLEFT[1][2], RUNNING_UPLEFT[1][3], this.pos[0], this.pos[1], RUNNING_UPLEFT[1][2], RUNNING_UPLEFT[1][3]);
+          } else if (1.2 < this.angle && this.angle < 2) {
+            ctx.drawImage(contra3, RUNNING_DOWNLEFT[1][0], RUNNING_DOWNLEFT[1][1], RUNNING_DOWNLEFT[1][2], RUNNING_DOWNLEFT[1][3], this.pos[0], this.pos[1], RUNNING_DOWNLEFT[1][2], RUNNING_DOWNLEFT[1][3]);
+          } else {
+            ctx.drawImage(contra3, RUNNING_LEFT[1][0], RUNNING_LEFT[1][1], RUNNING_LEFT[1][2], RUNNING_LEFT[1][3], this.pos[0], this.pos[1], RUNNING_LEFT[1][2], RUNNING_LEFT[1][3]);
+          }
         }
         break;
       default:

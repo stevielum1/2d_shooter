@@ -6,8 +6,8 @@ class Bullet {
   }
 
   shoot() {
-    this.pos[0] = this.player.pos[0];
-    this.pos[1] = this.player.pos[1];
+    this.pos[0] = this.player.pos[0]+15;
+    this.pos[1] = this.player.pos[1]+15;
     this.vel[0] = Math.cos(this.player.angle) * 10;
     this.vel[1] = Math.sin(this.player.angle) * 10;
   }

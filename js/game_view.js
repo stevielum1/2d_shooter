@@ -23,24 +23,24 @@ class GameView {
     key('space', () => this.game.shoot() );
     key('a', () => {
       this.keydown = "left";
-      this.game.player.sprite = "run left";
+      this.game.player.sprite = "run";
     });
     key('d', () => {
       this.keydown = "right";
-      this.game.player.sprite = "run right";
+      this.game.player.sprite = "run";
     });
     window.addEventListener("keyup", e => {
       switch(e.which) {
         case 65:
           if (this.keydown !== "right") {
             this.keydown = "";
-            this.game.player.sprite = "stand left";
+            this.game.player.sprite = "stand";
           }
           break;
         case 68:
           if (this.keydown !== "left") {
             this.keydown = "";
-            this.game.player.sprite = "stand right";
+            this.game.player.sprite = "stand";
           }
           break;
         default:
