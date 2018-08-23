@@ -29,18 +29,19 @@ class GameView {
       this.keydown = "right";
       this.game.player.sprite = "run";
     });
+    key('w', () => {
+      this.game.player.updateJump();
+    });
     window.addEventListener("keyup", e => {
       switch(e.which) {
         case 65:
           if (this.keydown !== "right") {
             this.keydown = "";
-            this.game.player.sprite = "stand";
           }
           break;
         case 68:
           if (this.keydown !== "left") {
             this.keydown = "";
-            this.game.player.sprite = "stand";
           }
           break;
         default:
