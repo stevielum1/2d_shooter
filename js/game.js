@@ -13,7 +13,9 @@ class Game {
     this.currentEnemyBullet = 0;
     this.scrollX = 0;
     this.initEnemies();
-    this.buffer = 0;
+    this.enemyBuffer = 0;
+    this.enemyShootBuffer = 0;
+    this.moving = "";
   }
 
   initBullets() {
@@ -25,7 +27,7 @@ class Game {
 
     this.enemyBullets = [];
     for(let i = 0; i < 50; i++) {
-      const bullet = new EnemyBullet();
+      const bullet = new EnemyBullet(this);
       this.enemyBullets.push(bullet);
     }
   }
@@ -33,12 +35,15 @@ class Game {
   initEnemies() {
     this.enemies = [];
 
-    const enemy = new GroundEnemy({
-      from: "left",
-      speed: 3
-    });
-
-    this.enemies.push(enemy);
+    for (let i = 0; i < 20; i++) {
+      const from = Math.random() < 0.5 ? "left" : "right";
+      const enemy = new GroundEnemy({
+        from,
+        speed: 0,
+        game: this
+      });
+      this.enemies.push(enemy);
+    }
   }
 
   draw(ctx) {
@@ -75,8 +80,6 @@ class Game {
     this.enemyBullets.forEach(eBullet => {
       eBullet.move();
     });
-
-    this.buffer = (this.buffer + 1) % BUFFER;
   }
 
   checkCollisions() {
@@ -97,29 +100,27 @@ class Game {
   }
 
   randomEnemyShoot() {
-    if (this.buffer === 7) {
+    if (this.enemyShootBuffer === 7) {
       const idx = Math.floor(Math.random() * this.enemies.length);
       const enemy = this.enemies[idx];
       this.enemyBullets[this.currentEnemyBullet].shoot(enemy);
       this.currentEnemyBullet = (this.currentEnemyBullet + 1) % 50;
     }
+    this.enemyShootBuffer = (this.enemyShootBuffer + 1) % BUFFER;
   }
 
   spawnEnemy() {
-    if (this.buffer === 0) {
-      const from = Math.random() < 0.5 ? "left" : "right";
-      const speed = Math.floor(Math.random() * 4) + 1;
-      const enemy = new GroundEnemy({
-        from,
-        speed
-      });
-      this.enemies.push(enemy);
+    if (this.enemyBuffer === 0) {
+      const idx = Math.floor(Math.random() * this.enemies.length);
+      this.enemies[idx].updateSpeed(Math.floor(Math.random() * 4) + 1);
     }
+    this.enemyBuffer = (this.enemyBuffer + 1) % BUFFER;
   }
 
   removeEnemy(enemy) {
     const idx = this.enemies.indexOf(enemy);
-    this.enemies = this.enemies.slice(0, idx).concat(this.enemies.slice(idx+1));
+    this.enemies[idx].updateSpeed(0);
+    this.enemies[idx].updatePos();
   }
 
   allObjects() {

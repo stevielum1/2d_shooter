@@ -8,9 +8,12 @@ const BUFFER = 10;
 
 class GroundEnemy {
   constructor(options) {
+    this.game = options.game;
     this.health = 2;
-    this.pos = options.from === "left" ? [-5, 450] : [1005, 450];
-    this.vel = options.from === "left" ? [options.speed, 0] : [-options.speed, 0];
+    this.from = options.from;
+    this.pos = [0,0];
+    this.updatePos();
+    this.vel = [0,0];
     this.width = 32;
     this.height = 40;
     this.currentSprite = 0;
@@ -35,13 +38,35 @@ class GroundEnemy {
   }
 
   move() {
-    this.pos[0] += this.vel[0];
+    if (this.game.moving === "left") {
+      if (this.vel[0] > 0) {
+        this.pos[0] = this.pos[0] + this.vel[0] * 1.5;
+      } else {
+        this.pos[0] = this.pos[0] + this.vel[0] * 0.5;
+      }
+    } else if (this.game.moving === "right") {
+      if (this.vel[0] > 0) {
+        this.pos[0] = this.pos[0] + this.vel[0] * 0.5;
+      } else {
+        this.pos[0] = this.pos[0] + this.vel[0] * 1.5;
+      }
+    } else {
+      this.pos[0] += this.vel[0];
+    }
     if (this.pos[0] > 1005) {
       this.pos[0] = -5;
     }
     if (this.pos[0] < -5) {
       this.pos[0] = 1005;
     }
+  }
+
+  updateSpeed(speed) {
+    this.vel = this.from === "left" ? [-speed, 0] : [speed, 0];
+  }
+
+  updatePos() {
+    this.pos = this.from === "left" ? [-30, 450] : [1005, 450];
   }
 
   collideWith(object) {

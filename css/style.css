@@ -1,3 +1,28 @@
 img {
   display: none;
 }
+
+#main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  color: inherit;
+}
+
+i {
+  font-size: 60px;
+}
+
+i:hover {
+  cursor: pointer;
+  color: rgba(0,0,0,0.5);
+}
+
+#health {
+  position: absolute;
+  color: red;
+  top: 0;
+  left: 2%;
+}

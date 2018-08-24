@@ -1,5 +1,6 @@
 class EnemyBullet {
-  constructor() {
+  constructor(game) {
+    this.game = game;
     this.pos = [-10, -10];
     this.vel = [0, 0];
     this.radius = 3;
@@ -12,10 +13,26 @@ class EnemyBullet {
   }
 
   move() {
-    this.pos[0] += this.vel[0];
-    this.pos[1] += this.vel[1];
+    if (this.game.moving === "left") {
+      if (this.vel[0] > 0) {
+        this.pos[0] = this.pos[0] + this.vel[0] * 1.5;
+      } else {
+        this.pos[0] = this.pos[0] + this.vel[0] * 0.5;
+      }
+    } else if (this.game.moving === "right") {
+      if (this.vel[0] > 0) {
+        this.pos[0] = this.pos[0] + this.vel[0] * 0.5;
+      } else {
+        this.pos[0] = this.pos[0] + this.vel[0] * 1.5;
+      }
+    } else {
+      this.pos[0] += this.vel[0];
+      this.pos[1] += this.vel[1];
+    }
+
     if (this.pos[0] >= 1005 || this.pos[0] <= -10) {
       this.pos[0] = -10;
+      this.vel = [0, 0];
     }
   }
 
