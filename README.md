@@ -1,0 +1,10 @@
+This is a small side project of a 2D shooter game.
+
+The sprites are from the game `Contra 3: The Alien Wars`.
+
+![2d_shooter](./docs/2d_shooter.png)
+
+### Setup
+1. `git clone `
+2. `npm install`
+3. Open `index.html` in your favorite browser
